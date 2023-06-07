@@ -14,8 +14,14 @@ public interface AdminDao {
     @Select("SELECT * FROM admins")
     List<Admin> getAllAdmins();
 
+    @Select("SELECT * FROM admins LIMIT #{pageNum}, #{pageSize}")
+    List<Admin> getAdminByPage(Integer pageNum, Integer pageSize);
+
     @Select("SELECT * FROM admins WHERE account = #{account}")
     Admin getAdminById(Integer account);
+
+    @Select("SELECT COUNT(*) FROM admins")
+    Integer getTotalNum();
 
     @Insert("INSERT INTO admins(name, email) VALUES(#{name}, #{email})")
     @Options(useGeneratedKeys = true, keyProperty = "account")

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/login")
 public class LoginController {
     @Autowired
     private UserDao userDao;
@@ -17,7 +18,7 @@ public class LoginController {
     private AdminServiceImpl adminService;
 
 //    @CrossOrigin(origins = "http://localhost:8529")
-    @PostMapping("/login")
+    @PostMapping
     public ApiResponse<User> getUser(@RequestBody LoginInfo info){
         System.out.println("username:" + info.getUsername());
         System.out.println("password:" + info.getPassword());
@@ -26,14 +27,7 @@ public class LoginController {
         return ApiResponse.success(user);
     }
 
-    @GetMapping("/admin")
-    public ApiResponse<Admin> getAdminById(Integer account){
-        Admin admin = adminService.getAdminById(account);
-        if(admin == null) return ApiResponse.error(201,"用户名不存在或密码错误");
-        return ApiResponse.success(admin);
-    }
-
-    @PostMapping ("/admin/login")
+    @PostMapping ("/admin")
     public ApiResponse<LoginInfo> getAdminByLogin(@RequestBody LoginInfo info){
         LoginInfo loginInfo = adminService.getAdminByLogin(info.getUsername(), info.getPassword());
         if(loginInfo == null) return ApiResponse.error(201,"用户名不存在或密码错误");

@@ -22,6 +22,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Integer getTotalNum() {
+        return adminDao.getTotalNum();
+    }
+
+    @Override
     public LoginInfo getAdminByLogin(String username, String password) {
         Admin admin = adminDao.getAdminByLogin(username, password);
         if(admin == null) return null;
@@ -31,6 +36,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Admin> getAllAdmin() {
         return null;
+    }
+
+    @Override
+    public List<Admin> getAdminByPage(Integer pageNum, Integer pageSize) {
+        return adminDao.getAdminByPage(pageNum, pageSize);
     }
 
     @Override
