@@ -15,9 +15,6 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    // Getter和Setter方法
-    // ...
-
     // 静态方法：成功响应
     public static <T> ApiResponse<T> success(T data) {
         return new ApiResponse<>(200, "Success", data);
