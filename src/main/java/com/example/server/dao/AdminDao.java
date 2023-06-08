@@ -36,6 +36,9 @@ public interface AdminDao {
     @Select("SELECT * FROM admins WHERE account = #{account}")
     Admin getAdminById(Integer account);
 
+    @Select("SELECT * FROM admins WHERE username = #{username}")
+    Admin getAdminByName(String username);
+
     //  动态分页查询重量
     //  @Select("SELECT COUNT(*) FROM admins")
     //  Integer getTotalNum();
@@ -50,9 +53,12 @@ public interface AdminDao {
     })
     int getTotalNum(@Param("query") String query);
 
-    @Insert("INSERT INTO admins(name, email) VALUES(#{name}, #{email})")
+    @Insert({"INSERT INTO",
+            "admins(username, password, role, create_at)",
+            "VALUES(#{username}, #{password}, #{role}, #{createAt})"
+    })
     @Options(useGeneratedKeys = true, keyProperty = "account")
-    void createAdmin(Admin admin);
+    Integer createAdmin(Admin admin);
 
     @Update("UPDATE admins SET username = #{username}, password = #{password} WHERE account = #{account}")
     void updateAdmin(Admin admin);

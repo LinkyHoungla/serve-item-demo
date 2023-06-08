@@ -5,11 +5,9 @@ import com.example.server.entity.ApiResponse;
 import com.example.server.entity.PageInfo;
 import com.example.server.service.impl.AdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,10 +17,23 @@ public class AdminController {
     private AdminServiceImpl adminService;
 
     @GetMapping
-    public ApiResponse<Admin> getAdminById(Integer account){
-        Admin admin = adminService.getAdminById(account);
+    public ApiResponse<Admin> getAdminByName(String name){
+        Admin admin = adminService.getAdminByName(name);
         if (admin == null) return ApiResponse.error(403, "未找到");
         return ApiResponse.success(admin);
+    }
+
+    @GetMapping("/sameName")
+    public ApiResponse isSameName(String username) {
+        if (adminService.getAdminByName(username) == null) return ApiResponse.success("用户名可用");
+        return ApiResponse.error(201, "用户名已存在");
+    }
+
+    @PostMapping
+    public ApiResponse addAdmin(@RequestBody Admin admin) {
+        admin.setCreateAt(new Date());
+        if( adminService.createAdmin(admin) > 0) return ApiResponse.success(null);
+        return ApiResponse.error(304,"添加失败");
     }
 
     @GetMapping("/page")

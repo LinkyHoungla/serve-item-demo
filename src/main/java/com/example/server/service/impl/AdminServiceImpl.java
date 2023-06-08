@@ -22,6 +22,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Admin getAdminByName(String name) {
+        return adminDao.getAdminByName(name);
+    }
+
+    @Override
     public Integer getTotalNum(String query) {
         return adminDao.getTotalNum(query);
     }
@@ -44,8 +49,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void createAdmin(Admin admin) {
-
+    public Integer createAdmin(Admin admin) {
+       return adminDao.createAdmin(admin);
     }
 
     @Override

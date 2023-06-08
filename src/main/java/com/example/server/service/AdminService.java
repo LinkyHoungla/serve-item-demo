@@ -7,11 +7,12 @@ import java.util.List;
 
 public interface AdminService {
     Admin getAdminById(Integer id);
+    Admin getAdminByName(String name);
     Integer getTotalNum(String query);
     LoginInfo getAdminByLogin(String username, String password);
     List<Admin> getAllAdmin();
     List<Admin> getAdminByPage(String query, Integer pageNum, Integer pageSize);
-    void createAdmin(Admin admin);
+    Integer createAdmin(Admin admin);
     void updateAdmin(Admin admin);
     void deleteAdmin(Admin admin);
 }
