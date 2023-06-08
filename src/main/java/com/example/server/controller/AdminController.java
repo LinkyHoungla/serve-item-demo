@@ -27,8 +27,8 @@ public class AdminController {
 
     @GetMapping("/page")
     public ApiResponse<PageInfo> getAdminByPage(String query, Integer pageNum, Integer pageSize){
-        List<Admin> adminList = adminService.getAdminByPage(pageNum, pageSize);
-        Integer totalNum = adminService.getTotalNum();
+        List<Admin> adminList = adminService.getAdminByPage(query, pageNum, pageSize);
+        Integer totalNum = adminService.getTotalNum(query);
         PageInfo pageInfo = PageInfo.success(totalNum, adminList);
         if (adminList == null) return ApiResponse.error(403, "未找到");
         return ApiResponse.success(pageInfo);

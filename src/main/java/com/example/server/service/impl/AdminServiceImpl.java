@@ -22,8 +22,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Integer getTotalNum() {
-        return adminDao.getTotalNum();
+    public Integer getTotalNum(String query) {
+        return adminDao.getTotalNum(query);
     }
 
     @Override
@@ -39,8 +39,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Admin> getAdminByPage(Integer pageNum, Integer pageSize) {
-        return adminDao.getAdminByPage(pageNum, pageSize);
+    public List<Admin> getAdminByPage(String query, Integer pageNum, Integer pageSize) {
+         return adminDao.getAdminByPage(query, pageNum, pageSize);
     }
 
     @Override
