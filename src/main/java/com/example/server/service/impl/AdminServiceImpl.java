@@ -59,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteAdmin(Admin admin) {
-
+    public Integer deleteAdminById(Integer account) {
+        return adminDao.deleteAdminById(account);
     }
 }

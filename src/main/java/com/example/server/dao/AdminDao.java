@@ -64,5 +64,5 @@ public interface AdminDao {
     Integer updateAdmin(Admin admin);
 
     @Delete("DELETE FROM admins WHERE account = #{account}")
-    void deleteAdmin(Integer account);
+    Integer deleteAdminById(Integer account);
 }

@@ -44,6 +44,12 @@ public class AdminController {
         return ApiResponse.error(304,"添加失败");
     }
 
+    @DeleteMapping("/{account}")
+    public ApiResponse deleteAdminById(@PathVariable("account") Integer id) {
+        if( adminService.deleteAdminById(id) > 0 ) return ApiResponse.success(null);
+        return ApiResponse.error(304, "删除失败");
+    }
+
     @GetMapping("/page")
     public ApiResponse<PageInfo> getAdminByPage(String query, Integer pageNum, Integer pageSize){
         List<Admin> adminList = adminService.getAdminByPage(query, pageNum, pageSize);

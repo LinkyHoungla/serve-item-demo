@@ -14,5 +14,5 @@ public interface AdminService {
     List<Admin> getAdminByPage(String query, Integer pageNum, Integer pageSize);
     Integer createAdmin(Admin admin);
     Integer updateAdmin(Admin admin);
-    void deleteAdmin(Admin admin);
+    Integer deleteAdminById(Integer account);
 }
