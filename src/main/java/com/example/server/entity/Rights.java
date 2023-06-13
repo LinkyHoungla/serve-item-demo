@@ -5,11 +5,11 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Menus {
+public class Rights {
     private Integer id;
     private Integer parentId;
     private String name;
     private String path;
-    private String icon;
-    private List<Menus> childMenus;
+    private Integer level;
+    private List<Rights> childRights;
 }

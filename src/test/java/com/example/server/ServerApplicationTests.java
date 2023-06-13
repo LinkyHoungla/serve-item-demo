@@ -1,8 +1,7 @@
 package com.example.server;
 
-import com.example.server.dao.MenusDao;
 import com.example.server.dao.UserDao;
-import com.example.server.service.MenusService;
+import com.example.server.service.impl.RightsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +13,7 @@ class ServerApplicationTests {
     private UserDao userDao;
 
     @Autowired
-    private MenusService menusService;
+    private RightsServiceImpl rightsServiceImpl;
 
     @Test
     void contextLoads() {
@@ -23,7 +22,7 @@ class ServerApplicationTests {
 
     @Test
     void menusList() {
-        menusService.getMenus();
+        rightsServiceImpl.getMenus();
     }
 
 }
