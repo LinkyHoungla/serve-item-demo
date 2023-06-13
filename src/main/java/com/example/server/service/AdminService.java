@@ -13,6 +13,6 @@ public interface AdminService {
     List<Admin> getAllAdmin();
     List<Admin> getAdminByPage(String query, Integer pageNum, Integer pageSize);
     Integer createAdmin(Admin admin);
-    void updateAdmin(Admin admin);
+    Integer updateAdmin(Admin admin);
     void deleteAdmin(Admin admin);
 }

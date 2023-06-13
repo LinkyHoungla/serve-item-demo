@@ -60,8 +60,8 @@ public interface AdminDao {
     @Options(useGeneratedKeys = true, keyProperty = "account")
     Integer createAdmin(Admin admin);
 
-    @Update("UPDATE admins SET username = #{username}, password = #{password} WHERE account = #{account}")
-    void updateAdmin(Admin admin);
+    @Update("UPDATE admins SET username = #{username}, role = #{role} WHERE account = #{account}")
+    Integer updateAdmin(Admin admin);
 
     @Delete("DELETE FROM admins WHERE account = #{account}")
     void deleteAdmin(Integer account);

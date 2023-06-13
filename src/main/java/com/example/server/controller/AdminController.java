@@ -1,6 +1,7 @@
 package com.example.server.controller;
 
 import com.example.server.entity.Admin;
+import com.example.server.entity.AdminInfo;
 import com.example.server.entity.ApiResponse;
 import com.example.server.entity.PageInfo;
 import com.example.server.service.impl.AdminServiceImpl;
@@ -16,9 +17,9 @@ public class AdminController {
     @Autowired
     private AdminServiceImpl adminService;
 
-    @GetMapping
-    public ApiResponse<Admin> getAdminByName(String name){
-        Admin admin = adminService.getAdminByName(name);
+    @GetMapping("/{account}")
+    public ApiResponse<Admin> getAdminById(@PathVariable("account") Integer id){
+        Admin admin = adminService.getAdminById(id);
         if (admin == null) return ApiResponse.error(403, "未找到");
         return ApiResponse.success(admin);
     }
@@ -33,6 +34,13 @@ public class AdminController {
     public ApiResponse addAdmin(@RequestBody Admin admin) {
         admin.setCreateAt(new Date());
         if( adminService.createAdmin(admin) > 0) return ApiResponse.success(null);
+        return ApiResponse.error(304,"添加失败");
+    }
+
+    @PutMapping("/{account}")
+    public ApiResponse<AdminInfo> updateAdmin(@PathVariable("account") Integer id, @RequestBody Admin admin) {
+        admin.setAccount(id);
+        if( adminService.updateAdmin(admin) > 0) return ApiResponse.success(new AdminInfo(adminService.getAdminById(admin.getAccount())));
         return ApiResponse.error(304,"添加失败");
     }
 
