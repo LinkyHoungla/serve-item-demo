@@ -41,7 +41,7 @@ public class AdminController {
     public ApiResponse<AdminInfo> updateAdmin(@PathVariable("account") Integer id, @RequestBody Admin admin) {
         admin.setAccount(id);
         if( adminService.updateAdmin(admin) > 0) return ApiResponse.success(new AdminInfo(adminService.getAdminById(admin.getAccount())));
-        return ApiResponse.error(304,"添加失败");
+        return ApiResponse.error(304,"修改失败");
     }
 
     @DeleteMapping("/{account}")

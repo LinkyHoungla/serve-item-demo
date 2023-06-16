@@ -5,11 +5,11 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Rights {
+public class Pages {
     private Integer id;
     private Integer parentId;
     private String name;
     private String path;
     private Integer level;
-    private List<Rights> childRights;
+    private List<Pages> childPages;
 }

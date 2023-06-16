@@ -1,8 +1,8 @@
 package com.example.server.service.impl;
 
-import com.example.server.dao.RightsDao;
+import com.example.server.dao.PagesDao;
 import com.example.server.entity.Menus;
-import com.example.server.entity.Rights;
+import com.example.server.entity.Pages;
 import com.example.server.service.RightsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,30 +14,30 @@ import java.util.List;
 public class RightsServiceImpl implements RightsService {
 
     @Autowired
-    private RightsDao rightsDao;
+    private PagesDao pagesDao;
 
     public List<Menus> getMenus() {
-        List<Menus> menusList = rightsDao.getParentMenus();
+        List<Menus> menusList = pagesDao.getParentMenus();
 
         for(int i = 0 ; i < menusList.size(); i ++) {
-            menusList.get(i).setChildMenus(rightsDao.getChildMenus(menusList.get(i).getId()));
+            menusList.get(i).setChildMenus(pagesDao.getChildMenus(menusList.get(i).getId()));
         }
 
         return menusList;
     }
 
-    public List<Rights> getRightsTree() {
-        List<Rights> rightsList = rightsDao.getParentRights();
+    public List<Pages> getRightsTree() {
+        List<Pages> pagesList = pagesDao.getParentRights();
 
-        for(int i = 0 ; i < rightsList.size(); i ++) {
-            rightsList.get(i).setChildRights(rightsDao.getChildRights(rightsList.get(i).getId()));
+        for(int i = 0; i < pagesList.size(); i ++) {
+            pagesList.get(i).setChildPages(pagesDao.getChildRights(pagesList.get(i).getId()));
         }
 
-        return rightsList;
+        return pagesList;
     }
 
     @Override
-    public List<Rights> getRightsList() {
-        return rightsDao.getParentAllRights();
+    public List<Pages> getRightsList() {
+        return pagesDao.getParentAllRights();
     }
 }
