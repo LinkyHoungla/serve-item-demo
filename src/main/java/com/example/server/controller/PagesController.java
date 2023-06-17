@@ -36,4 +36,11 @@ public class PagesController {
         }
         return ApiResponse.error(404,"未知类型");
     }
+
+    @GetMapping("/rights/{roleId}")
+    public ApiResponse<List<Pages>> getRightsById(@PathVariable("roleId") Integer roleId) {
+        List<Pages> pagesList = rightsServiceImpl.getRightsList();
+        if (pagesList == null) return ApiResponse.error(201, "错误");
+        return ApiResponse.success(pagesList);
+    }
 }

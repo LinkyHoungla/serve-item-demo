@@ -3,7 +3,7 @@ package com.example.server.controller;
 import com.example.server.entity.Admin;
 import com.example.server.entity.AdminInfo;
 import com.example.server.entity.ApiResponse;
-import com.example.server.entity.PageInfo;
+import com.example.server.entity.QueryPage;
 import com.example.server.service.impl.AdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,11 +51,11 @@ public class AdminController {
     }
 
     @GetMapping("/page")
-    public ApiResponse<PageInfo> getAdminByPage(String query, Integer pageNum, Integer pageSize){
+    public ApiResponse<QueryPage> getAdminByPage(String query, Integer pageNum, Integer pageSize){
         List<Admin> adminList = adminService.getAdminByPage(query, pageNum, pageSize);
         Integer totalNum = adminService.getTotalNum(query);
-        PageInfo pageInfo = PageInfo.success(totalNum, adminList);
+        QueryPage queryPage = QueryPage.success(totalNum, adminList);
         if (adminList == null) return ApiResponse.error(403, "未找到");
-        return ApiResponse.success(pageInfo);
+        return ApiResponse.success(queryPage);
     }
 }
