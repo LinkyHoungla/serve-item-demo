@@ -1,7 +1,7 @@
 package com.example.server.service;
 
-import com.example.server.entity.Admin;
-import com.example.server.entity.LoginInfo;
+import com.example.server.model.Admin;
+import com.example.server.model.LoginInfo;
 
 import java.util.List;
 

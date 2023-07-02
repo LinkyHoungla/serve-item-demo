@@ -1,14 +1,11 @@
 package com.example.server.controller;
 
-import com.example.server.entity.Admin;
-import com.example.server.entity.AdminInfo;
-import com.example.server.entity.ApiResponse;
-import com.example.server.entity.Role;
+import com.example.server.model.ApiResponse;
+import com.example.server.model.Role;
 import com.example.server.service.impl.RolesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController

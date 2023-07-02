@@ -1,6 +1,6 @@
 package com.example.server.dao;
 
-import com.example.server.entity.Admin;
+import com.example.server.model.Admin;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

@@ -1,14 +1,13 @@
 package com.example.server.service.impl;
 
 import com.example.server.dao.AdminDao;
-import com.example.server.entity.Admin;
-import com.example.server.entity.LoginInfo;
+import com.example.server.model.Admin;
+import com.example.server.model.LoginInfo;
 import com.example.server.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class AdminServiceImpl implements AdminService {

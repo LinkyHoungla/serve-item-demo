@@ -1,9 +1,9 @@
 package com.example.server.controller;
 
-import com.example.server.entity.Admin;
-import com.example.server.entity.AdminInfo;
-import com.example.server.entity.ApiResponse;
-import com.example.server.entity.QueryPage;
+import com.example.server.model.Admin;
+import com.example.server.model.AdminInfo;
+import com.example.server.model.ApiResponse;
+import com.example.server.model.QueryPage;
 import com.example.server.service.impl.AdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

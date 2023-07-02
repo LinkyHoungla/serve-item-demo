@@ -1,7 +1,6 @@
 package com.example.server.dao;
 
-import com.example.server.entity.Admin;
-import com.example.server.entity.Role;
+import com.example.server.model.Role;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

@@ -1,8 +1,9 @@
 package com.example.server.controller;
 
-import com.example.server.entity.ApiResponse;
-import com.example.server.entity.Menus;
-import com.example.server.entity.Pages;
+import com.example.server.model.ApiResponse;
+import com.example.server.model.Menus;
+import com.example.server.model.Pages;
+import com.example.server.service.impl.AdminServiceImpl;
 import com.example.server.service.impl.RightsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,19 @@ import java.util.List;
 public class PagesController {
     @Autowired
     private RightsServiceImpl rightsServiceImpl;
+    @Autowired
+    private AdminServiceImpl adminService;
 
     @GetMapping("/menus")
     public ApiResponse<List<Menus>> getMenus() {
         List<Menus> menusList = rightsServiceImpl.getMenus();
+        if(menusList == null) return ApiResponse.error(201,"错误");
+        return ApiResponse.success(menusList);
+    }
+
+    @GetMapping("/menus/{roleId}")
+    public ApiResponse<List<Menus>> getMenusByRoleId(@PathVariable("roleId") String name) {
+        List<Menus> menusList = rightsServiceImpl.getMenusById(adminService.getAdminByName(name).getAccount());
         if(menusList == null) return ApiResponse.error(201,"错误");
         return ApiResponse.success(menusList);
     }

@@ -1,6 +1,6 @@
 package com.example.server.dao;
 
-import com.example.server.entity.User;
+import com.example.server.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

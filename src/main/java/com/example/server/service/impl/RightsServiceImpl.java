@@ -1,8 +1,8 @@
 package com.example.server.service.impl;
 
 import com.example.server.dao.PagesDao;
-import com.example.server.entity.Menus;
-import com.example.server.entity.Pages;
+import com.example.server.model.Menus;
+import com.example.server.model.Pages;
 import com.example.server.service.RightsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +21,17 @@ public class RightsServiceImpl implements RightsService {
 
         for(int i = 0 ; i < menusList.size(); i ++) {
             menusList.get(i).setChildMenus(pagesDao.getChildMenus(menusList.get(i).getId()));
+        }
+
+        return menusList;
+    }
+
+    @Override
+    public List<Menus> getMenusById(Integer roleId) {
+        List<Menus> menusList = pagesDao.getParentMenusByRoleId(roleId);
+
+        for(int i = 0 ; i < menusList.size(); i ++) {
+            menusList.get(i).setChildMenus(pagesDao.getChildMenusByRoleId(menusList.get(i).getId(), roleId));
         }
 
         return menusList;
