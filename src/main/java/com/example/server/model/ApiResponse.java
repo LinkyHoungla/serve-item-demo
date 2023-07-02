@@ -1,5 +1,6 @@
 package com.example.server.model;
 
+import com.example.server.constant.ApiError;
 import lombok.Data;
 
 @Data
@@ -13,6 +14,12 @@ public class ApiResponse<T> {
         this.status = status;
         this.message = message;
         this.data = data;
+    }
+
+    // 错误构造函数
+    public ApiResponse(ApiError apiError) {
+        this.status = apiError.getCode();
+        this.message = apiError.getMessage();
     }
 
     // 静态方法：成功响应
