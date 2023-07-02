@@ -28,5 +28,5 @@ public interface PagesDao {
     public List<Pages> getChildRights(Integer parentId);
 
     @Select("select * from pages")
-    public List<Pages> getParentAllRights();
+    public List<Pages> getAllRights();
 }

@@ -49,6 +49,6 @@ public class RightsServiceImpl implements RightsService {
 
     @Override
     public List<Pages> getRightsList() {
-        return pagesDao.getParentAllRights();
+        return pagesDao.getAllRights();
     }
 }
