@@ -1,18 +1,14 @@
 package com.example.server.dao;
 
-import com.example.server.model.Admin;
+import com.example.server.model.entity.AdminInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface AdminDao {
-
-    @Select("SELECT * FROM admins where username = #{username} and password = #{password}")
-    public Admin getAdminByLogin(String username, String password);
-
+public interface AdminInfoDao {
     @Select("SELECT * FROM admins")
-    List<Admin> getAllAdmins();
+    List<AdminInfo> getAllAdmins();
 
 //    动态分页查询
 //    @Select("SELECT * FROM admins LIMIT #{pageNum}, #{pageSize}")
@@ -27,17 +23,17 @@ public interface AdminDao {
             "LIMIT #{offset}, #{pageSize}",
             "</script>"
     })
-    List<Admin> getAdminByPage(
+    List<AdminInfo> getAdminByPage(
             @Param("query") String query,
             @Param("offset") int offset,
             @Param("pageSize") int pageSize
     );
 
     @Select("SELECT * FROM admins WHERE account = #{account}")
-    Admin getAdminById(Integer account);
+    AdminInfo getAdminById(Integer account);
 
-    @Select("SELECT * FROM admins WHERE username = #{username}")
-    Admin getAdminByName(String username);
+    @Select("SELECT * FROM admin_info WHERE admin_id = #{username}")
+    AdminInfo getAdminInfoByName(String username);
 
     //  动态分页查询重量
     //  @Select("SELECT COUNT(*) FROM admins")
@@ -58,10 +54,10 @@ public interface AdminDao {
             "VALUES(#{username}, #{password}, #{role}, #{createAt})"
     })
     @Options(useGeneratedKeys = true, keyProperty = "account")
-    Integer createAdmin(Admin admin);
+    Integer createAdmin(AdminInfo adminInfo);
 
     @Update("UPDATE admins SET username = #{username}, role = #{role} WHERE account = #{account}")
-    Integer updateAdmin(Admin admin);
+    Integer updateAdmin(AdminInfo adminInfo);
 
     @Delete("DELETE FROM admins WHERE account = #{account}")
     Integer deleteAdminById(Integer account);

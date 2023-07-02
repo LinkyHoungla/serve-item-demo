@@ -1,67 +1,100 @@
 package com.example.server.service.impl;
 
 import com.example.server.constant.ApiError;
-import com.example.server.dao.AdminDao;
+import com.example.server.dao.AdminInfoDao;
+import com.example.server.dao.AdminLoginDao;
 import com.example.server.exception.ApiException;
-import com.example.server.model.Admin;
-import com.example.server.model.LoginInfo;
+import com.example.server.model.entity.AdminInfo;
+import com.example.server.model.entity.AdminLogin;
+import com.example.server.model.entity.Role;
+import com.example.server.model.vo.LoginAdminVo;
 import com.example.server.service.AdminService;
 import com.example.server.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    private AdminDao adminDao;
+    private AdminInfoDao adminInfoDao;
+    @Autowired
+    private AdminLoginDao adminLoginDao;
+    @Autowired RoleServiceImpl roleService;
 
     @Override
-    public Admin getAdminById(Integer account) {
-        return adminDao.getAdminById(account);
+    public AdminInfo getAdminById(Integer account) {
+        return adminInfoDao.getAdminById(account);
     }
 
     @Override
-    public Admin getAdminByName(String name) {
-        return adminDao.getAdminByName(name);
+    public AdminInfo getAdminInfoByName(String name) {
+        return adminInfoDao.getAdminInfoByName(name);
+    }
+
+    @Override
+    public LoginAdminVo getLoginAdminVo(String name) {
+        AdminInfo adminInfo = getAdminInfoByName(name);
+        if (adminInfo == null) throw new ApiException(ApiError.E401);
+        Role role = roleService.getRoleByAdminId(adminInfo.getAdminId());
+        if (role == null) throw new ApiException(ApiError.E401);
+        return new LoginAdminVo(adminInfo, role);
+    }
+
+    private Integer login(AdminLogin adminLogin){
+        return adminLoginDao.updateAdminLogin(adminLogin);
     }
 
     @Override
     public Integer getTotalNum(String query) {
-        return adminDao.getTotalNum(query);
+        return adminInfoDao.getTotalNum(query);
     }
 
     @Override
-    public String getAdminByLogin(String username, String password) {
-        Admin admin = adminDao.getAdminByLogin(username, password);
-        if(admin == null) throw new ApiException(ApiError.E401);
-        return JwtUtil.generateToken(admin.getUsername());
+    public String loginAdmin(String username, String password, String ip) {
+        AdminLogin adminLogin = adminLoginDao.loginAdmin(username, password);
+        if(adminLogin == null) throw new ApiException(ApiError.E401);
+        adminLogin.setIp(ip);
+        adminLogin.setLoginAt(new Date());
+        if(login(adminLogin) <= 0) throw new ApiException(ApiError.E401);;
+        return JwtUtil.generateToken(adminLogin.getAdminName());
     }
 
     @Override
-    public List<Admin> getAllAdmin() {
+    public List<AdminInfo> getAllAdmin() {
         return null;
     }
 
     @Override
-    public List<Admin> getAdminByPage(String query, Integer pageNum, Integer pageSize) {
-         return adminDao.getAdminByPage(query, pageNum, pageSize);
+    public List<AdminInfo> getAdminByPage(String query, Integer pageNum, Integer pageSize) {
+         return adminInfoDao.getAdminByPage(query, pageNum, pageSize);
     }
 
     @Override
-    public Integer createAdmin(Admin admin) {
-       return adminDao.createAdmin(admin);
+    public Integer createAdmin(AdminInfo adminInfo) {
+       return adminInfoDao.createAdmin(adminInfo);
     }
 
     @Override
-    public Integer updateAdmin(Admin admin) {
-        return adminDao.updateAdmin(admin);
+    public Integer updateAdmin(AdminInfo adminInfo) {
+        return adminInfoDao.updateAdmin(adminInfo);
+    }
+
+    @Override
+    public Integer updateAdminLogin(AdminLogin adminLogin) {
+        return adminLoginDao.updateAdminLogin(adminLogin);
     }
 
     @Override
     public Integer deleteAdminById(Integer account) {
-        return adminDao.deleteAdminById(account);
+        return adminInfoDao.deleteAdminById(account);
+    }
+
+    @Override
+    public AdminLogin getAdminLoginByName(String name) {
+        return getAdminLoginByName(name);
     }
 }

@@ -3,11 +3,11 @@ package com.example.server.model.param;
 import lombok.Data;
 
 @Data
-public class LoginInfo {
+public class LoginParam {
     private String username;
     private String password;
 
-    public LoginInfo(String username, String token) {
+    public LoginParam(String username, String token) {
         this.username = username;
         this.password = token;
     }

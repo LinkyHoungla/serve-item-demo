@@ -1,8 +1,8 @@
 package com.example.server.controller;
 
 import com.example.server.model.ApiResponse;
-import com.example.server.model.Role;
-import com.example.server.service.impl.RolesServiceImpl;
+import com.example.server.model.entity.Role;
+import com.example.server.service.impl.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/roles")
 public class RoleController {
     @Autowired
-    private RolesServiceImpl rolesService;
+    private RoleServiceImpl rolesService;
 
     @GetMapping
     public ApiResponse<List<Role>> getAllRoles(){

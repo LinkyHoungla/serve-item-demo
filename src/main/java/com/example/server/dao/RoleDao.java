@@ -1,6 +1,6 @@
 package com.example.server.dao;
 
-import com.example.server.model.Role;
+import com.example.server.model.entity.Role;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -10,6 +10,9 @@ public interface RoleDao {
 
     @Select("SELECT * FROM roles")
     public List<Role> getAllRoles();
+
+    @Select("SELECT r.* FROM role r INNER JOIN admin_info ai ON r.role_id = ai.role_id WHERE ai.admin_id = #{adminId}")
+    public Role getRoleByAdminId(Integer adminId);
 
     @Insert({"INSERT INTO",
             "roles(role_name, role_code, role_desc)",

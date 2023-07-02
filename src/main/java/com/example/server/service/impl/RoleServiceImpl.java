@@ -1,15 +1,15 @@
 package com.example.server.service.impl;
 
 import com.example.server.dao.RoleDao;
-import com.example.server.model.Role;
-import com.example.server.service.RolesService;
+import com.example.server.model.entity.Role;
+import com.example.server.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RolesServiceImpl implements RolesService {
+public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
 
@@ -17,6 +17,11 @@ public class RolesServiceImpl implements RolesService {
     @Override
     public List<Role> getAllRoles() {
         return roleDao.getAllRoles();
+    }
+
+    @Override
+    public Role getRoleByAdminId(Integer adminId) {
+        return roleDao.getRoleByAdminId(adminId);
     }
 
     @Override

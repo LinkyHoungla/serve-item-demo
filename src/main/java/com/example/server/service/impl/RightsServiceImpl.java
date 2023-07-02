@@ -2,7 +2,7 @@ package com.example.server.service.impl;
 
 import com.example.server.dao.PagesDao;
 import com.example.server.model.Menus;
-import com.example.server.model.Pages;
+import com.example.server.model.entity.Page;
 import com.example.server.service.RightsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,18 +37,18 @@ public class RightsServiceImpl implements RightsService {
         return menusList;
     }
 
-    public List<Pages> getRightsTree() {
-        List<Pages> pagesList = pagesDao.getParentRights();
+    public List<Page> getRightsTree() {
+        List<Page> pageList = pagesDao.getParentRights();
 
-        for(int i = 0; i < pagesList.size(); i ++) {
-            pagesList.get(i).setChildPages(pagesDao.getChildRights(pagesList.get(i).getId()));
-        }
+        // for(int i = 0; i < pageList.size(); i ++) {
+        //     pageList.get(i).setChildPages(pagesDao.getChildRights(pageList.get(i).getId()));
+        // }
 
-        return pagesList;
+        return pageList;
     }
 
     @Override
-    public List<Pages> getRightsList() {
+    public List<Page> getRightsList() {
         return pagesDao.getAllRights();
     }
 }

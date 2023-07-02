@@ -1,15 +1,15 @@
-package com.example.server.model;
+package com.example.server.model.entity;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class Pages {
-    private Integer id;
+public class Page {
+    private Integer pageId;
     private Integer parentId;
     private String name;
     private String path;
+    private String icon;
     private Integer level;
-    private List<Pages> childPages;
 }

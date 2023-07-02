@@ -2,7 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.model.ApiResponse;
 import com.example.server.model.Menus;
-import com.example.server.model.Pages;
+import com.example.server.model.entity.Page;
 import com.example.server.service.impl.AdminServiceImpl;
 import com.example.server.service.impl.RightsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,29 +28,29 @@ public class PagesController {
 
     @GetMapping("/menus/{roleId}")
     public ApiResponse<List<Menus>> getMenusByRoleId(@PathVariable("roleId") String name) {
-        List<Menus> menusList = rightsServiceImpl.getMenusById(adminService.getAdminByName(name).getAccount());
-        if(menusList == null) return ApiResponse.error(201,"错误");
-        return ApiResponse.success(menusList);
+        // List<Menus> menusList = rightsServiceImpl.getMenusById(adminService.getAdminByName(name).getAdminId());
+        // if(menusList == null) return ApiResponse.error(201,"错误");
+        return ApiResponse.success(null);
     }
 
     @GetMapping("/rights/{type}")
-    public ApiResponse<List<Pages>> getRights(@PathVariable("type") String type) {
+    public ApiResponse<List<Page>> getRights(@PathVariable("type") String type) {
         if(type.equals("tree")) {
-            List<Pages> pagesList = rightsServiceImpl.getRightsTree();
-            if (pagesList == null) return ApiResponse.error(201, "错误");
-            return ApiResponse.success(pagesList);
+            List<Page> pageList = rightsServiceImpl.getRightsTree();
+            if (pageList == null) return ApiResponse.error(201, "错误");
+            return ApiResponse.success(pageList);
         }else if(type.equals("list")){
-            List<Pages> pagesList = rightsServiceImpl.getRightsList();
-            if (pagesList == null) return ApiResponse.error(201, "错误");
-            return ApiResponse.success(pagesList);
+            List<Page> pageList = rightsServiceImpl.getRightsList();
+            if (pageList == null) return ApiResponse.error(201, "错误");
+            return ApiResponse.success(pageList);
         }
         return ApiResponse.error(404,"未知类型");
     }
 
     @GetMapping("/right/{roleId}")
-    public ApiResponse<List<Pages>> getRightsById(@PathVariable("roleId") Integer roleId) {
-        List<Pages> pagesList = rightsServiceImpl.getRightsList();
-        if (pagesList == null) return ApiResponse.error(201, "错误");
-        return ApiResponse.success(pagesList);
+    public ApiResponse<List<Page>> getRightsById(@PathVariable("roleId") Integer roleId) {
+        List<Page> pageList = rightsServiceImpl.getRightsList();
+        if (pageList == null) return ApiResponse.error(201, "错误");
+        return ApiResponse.success(pageList);
     }
 }

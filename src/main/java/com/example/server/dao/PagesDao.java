@@ -1,7 +1,7 @@
 package com.example.server.dao;
 
 import com.example.server.model.Menus;
-import com.example.server.model.Pages;
+import com.example.server.model.entity.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -22,11 +22,11 @@ public interface PagesDao {
     public List<Menus> getChildMenusByRoleId(Integer parentId,Integer roleId);
 
     @Select("select * from pages where parent_id = -1")
-    public List<Pages> getParentRights();
+    public List<Page> getParentRights();
 
     @Select("select * from pages where parent_id = #{parentId}")
-    public List<Pages> getChildRights(Integer parentId);
+    public List<Page> getChildRights(Integer parentId);
 
     @Select("select * from pages")
-    public List<Pages> getAllRights();
+    public List<Page> getAllRights();
 }
