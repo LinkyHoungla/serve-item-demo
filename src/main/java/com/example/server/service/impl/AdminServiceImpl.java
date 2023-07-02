@@ -1,9 +1,12 @@
 package com.example.server.service.impl;
 
+import com.example.server.constant.ApiError;
 import com.example.server.dao.AdminDao;
+import com.example.server.exception.ApiException;
 import com.example.server.model.Admin;
 import com.example.server.model.LoginInfo;
 import com.example.server.service.AdminService;
+import com.example.server.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +34,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public LoginInfo getAdminByLogin(String username, String password) {
+    public String getAdminByLogin(String username, String password) {
         Admin admin = adminDao.getAdminByLogin(username, password);
-        if(admin == null) return null;
-        return LoginInfo.success(admin.getUsername(), admin.getRole());
+        if(admin == null) throw new ApiException(ApiError.E401);
+        return JwtUtil.generateToken(admin.getUsername());
     }
 
     @Override

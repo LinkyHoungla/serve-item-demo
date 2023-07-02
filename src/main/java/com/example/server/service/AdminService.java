@@ -9,7 +9,7 @@ public interface AdminService {
     Admin getAdminById(Integer id);
     Admin getAdminByName(String name);
     Integer getTotalNum(String query);
-    LoginInfo getAdminByLogin(String username, String password);
+    String getAdminByLogin(String username, String password);
     List<Admin> getAllAdmin();
     List<Admin> getAdminByPage(String query, Integer pageNum, Integer pageSize);
     Integer createAdmin(Admin admin);
