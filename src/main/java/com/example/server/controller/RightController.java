@@ -3,20 +3,18 @@ package com.example.server.controller;
 import com.example.server.model.ApiResponse;
 import com.example.server.model.vo.Menu;
 import com.example.server.model.vo.PageTree;
-import com.example.server.service.impl.PageServiceImpl;
+import com.example.server.service.impl.RightServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.builders.RequestHandlerSelectors;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-public class PagesController {
+public class RightController {
     @Autowired
-    private PageServiceImpl pageService;
+    private RightServiceImpl pageService;
 
     @GetMapping("/pageTree")
     public ApiResponse<List<PageTree>> getRights() {

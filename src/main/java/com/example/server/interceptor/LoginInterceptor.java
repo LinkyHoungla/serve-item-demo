@@ -6,6 +6,7 @@ import com.example.server.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.Cookie;
@@ -42,10 +43,12 @@ public class LoginInterceptor implements HandlerInterceptor {
             System.out.print(role + "--");
             System.out.println(ip);
 
-        }catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException e) {
             throw new ApiException(ApiError.E451);
         } catch (MalformedJwtException e) {
             throw new ApiException(ApiError.E450);
+        } catch (SignatureException e) {
+            throw new ApiException(ApiError.E401);
         }
 
         // 校验通过，允许请求继续访问后续拦截器

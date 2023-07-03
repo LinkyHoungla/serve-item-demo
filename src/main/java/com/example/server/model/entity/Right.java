@@ -2,10 +2,8 @@ package com.example.server.model.entity;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class Page {
+public class Right {
     private Integer pageId;
     private Integer parentId;
     private String name;

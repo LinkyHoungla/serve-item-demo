@@ -1,6 +1,7 @@
 package com.example.server.dao;
 
 import com.example.server.model.entity.AdminInfo;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -13,38 +14,28 @@ public interface AdminInfoDao {
     @Select("SELECT * FROM admins")
     List<AdminInfo> getAllAdmins();
 
-//    动态分页查询
-//    @Select("SELECT * FROM admins LIMIT #{pageNum}, #{pageSize}")
-//    List<Admin> getAdminByPage(String query, Integer pageNum, Integer pageSize);
-    @Select({
-            "<script>",
-            "SELECT * FROM admins",
-            "WHERE 1 = 1",
-            "<if test='query != null'>",
-            "AND username LIKE CONCAT('%', #{query}, '%')",
-            "</if>",
-            "LIMIT #{offset}, #{pageSize}",
-            "</script>"
-    })
-    List<AdminInfo> getAdminByPage(
-            @Param("query") String query,
-            @Param("offset") int offset,
-            @Param("pageSize") int pageSize
-    );
-
     @Select("SELECT * FROM admins WHERE account = #{account}")
     AdminInfo getAdminById(Integer account);
 
-
-    //  动态分页查询重量
-    //  @Select("SELECT COUNT(*) FROM admins")
-    //  Integer getTotalNum();
+    // 动态分页查询
     @Select({
             "<script>",
-            "SELECT COUNT(*) FROM admins",
+            "SELECT * FROM admin_info",
             "WHERE 1 = 1",
             "<if test='query != null'>",
-            "AND username LIKE CONCAT('%', #{query}, '%')",
+            "AND full_name LIKE CONCAT('%', #{query}, '%')",
+            "</if>",
+            "</script>"
+    })
+    Page<AdminInfo> findAdminsByPage(String query);
+
+    // 动态分页查询总量
+    @Select({
+            "<script>",
+            "SELECT COUNT(*) FROM admin_info",
+            "WHERE 1 = 1",
+            "<if test='query != null'>",
+            "AND full_name LIKE CONCAT('%', #{query}, '%')",
             "</if>",
             "</script>"
     })

@@ -1,7 +1,5 @@
 package com.example.server.model.vo;
 
-import com.example.server.model.entity.Page;
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.util.List;
