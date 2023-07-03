@@ -15,7 +15,4 @@ public interface AdminLoginDao {
 
     @Update("UPDATE admin_login SET admin_name = #{adminName}, login_at = #{loginAt}, ip = #{ip} WHERE admin_id = #{adminId}")
     Integer updateAdminLogin(AdminLogin adminLogin);
-
-    @Select("SELECT * FROM admin_login where admin_name = #{adminName}")
-    public AdminLogin getAdminLoginByName(String adminName);
 }

@@ -25,6 +25,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public String getRoleCodeByAdminId(Integer adminId) {
+        return roleDao.getRoleCodeByAdminId(adminId);
+    }
+
+    @Override
     public Integer createRole(Role role) {
         return roleDao.createRole(role);
     }

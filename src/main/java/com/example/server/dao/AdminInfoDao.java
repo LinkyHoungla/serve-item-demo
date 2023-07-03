@@ -7,6 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface AdminInfoDao {
+    @Select("SELECT * FROM admin_info WHERE admin_id = #{username}")
+    AdminInfo getAdminInfoByName(String username);
+
     @Select("SELECT * FROM admins")
     List<AdminInfo> getAllAdmins();
 
@@ -32,8 +35,6 @@ public interface AdminInfoDao {
     @Select("SELECT * FROM admins WHERE account = #{account}")
     AdminInfo getAdminById(Integer account);
 
-    @Select("SELECT * FROM admin_info WHERE admin_id = #{username}")
-    AdminInfo getAdminInfoByName(String username);
 
     //  动态分页查询重量
     //  @Select("SELECT COUNT(*) FROM admins")

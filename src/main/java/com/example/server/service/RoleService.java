@@ -5,9 +5,10 @@ import com.example.server.model.entity.Role;
 import java.util.List;
 
 public interface RoleService {
-    public List<Role> getAllRoles();
+    List<Role> getAllRoles();
 
-    public Role getRoleByAdminId(Integer adminId);
+    Role getRoleByAdminId(Integer adminId);
+    String getRoleCodeByAdminId(Integer adminId);
 
     Integer createRole(Role role);
     Integer updateRole(Role role);

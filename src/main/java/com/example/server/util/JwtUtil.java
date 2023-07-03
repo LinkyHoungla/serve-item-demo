@@ -1,5 +1,7 @@
 package com.example.server.util;
 
+import com.example.server.model.entity.AdminLogin;
+import com.example.server.model.vo.LoginDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 public class JwtUtil {
-    // 7天过期
-    private static long expire = 604800;
+    // 60s过期
+    private static long expire = 60;
     // 32位密钥
     private static String secret = "AaBbCcDdKinvaLinkyLoveYing123456";
     // token前缀
@@ -23,12 +25,20 @@ public class JwtUtil {
     private static final List<String> revokedTokens = new ArrayList<>();
 
     // 生成Token
-    public static String generateToken(String username) {
+    public static String generateToken(LoginDetail loginDetail) {
+        // 设置有效期
         Date now = new Date();
         Date expiration = new Date(now.getTime() + 1000 * expire);
+
+        Claims claims = Jwts.claims().setSubject(loginDetail.getUsername());
+        claims.put("uid", loginDetail.getUid());
+        claims.put("role", loginDetail.getRole());
+        claims.put("ip", loginDetail.getIp());
+
         return Jwts.builder()
                 .setHeaderParam("type", "JWT")
-                .setSubject(username)
+                // .setSubject(username)
+                .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS512, secret)

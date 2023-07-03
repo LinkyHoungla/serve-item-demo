@@ -26,10 +26,21 @@ public class LoginInterceptor implements HandlerInterceptor {
 
             // 在解析后的 Claims 中获取用户信息
             String username = claims.getSubject();
-            System.out.println(username);
+            Integer uid = claims.get("uid", Integer.class);
+            String role = claims.get("role", String.class);
+            String ip = claims.get("ip", String.class);
+
 
             // TODO: 根据需要进行其他逻辑处理
             request.setAttribute("username", username);
+            request.setAttribute("uid", uid);
+            request.setAttribute("role", role);
+            request.setAttribute("ip", ip);
+
+            System.out.print(username + "--");
+            System.out.print(uid + "--");
+            System.out.print(role + "--");
+            System.out.println(ip);
 
         }catch (ExpiredJwtException e) {
             throw new ApiException(ApiError.E451);

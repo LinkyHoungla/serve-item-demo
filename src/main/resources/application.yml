@@ -7,6 +7,9 @@ spring:
       additional-paths: src/main/java
       # ??classpath???? WEB-INF ??????????
       exclude: static/**
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    time-zone: "GMT+8"
   # ???
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,4 +24,4 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
     plugins:
-      -com.github.pagehelper.PageInterceptor
+      - com.github.pagehelper.PageInterceptor

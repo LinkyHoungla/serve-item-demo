@@ -8,6 +8,7 @@ import com.example.server.model.entity.AdminInfo;
 import com.example.server.model.entity.AdminLogin;
 import com.example.server.model.entity.Role;
 import com.example.server.model.vo.LoginAdminVo;
+import com.example.server.model.vo.LoginDetail;
 import com.example.server.service.AdminService;
 import com.example.server.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,17 @@ public class AdminServiceImpl implements AdminService {
         if(adminLogin == null) throw new ApiException(ApiError.E401);
         adminLogin.setIp(ip);
         adminLogin.setLoginAt(new Date());
-        if(login(adminLogin) <= 0) throw new ApiException(ApiError.E401);;
-        return JwtUtil.generateToken(adminLogin.getAdminName());
+        if(login(adminLogin) <= 0) throw new ApiException(ApiError.E401);
+
+        LoginDetail loginDetail = new LoginDetail();
+        loginDetail.setUid(adminLogin.getAdminId());
+        loginDetail.setUsername(adminLogin.getAdminName());
+        loginDetail.setIp(ip);
+        loginDetail.setRole(roleService.getRoleCodeByAdminId(loginDetail.getUid()));
+
+        // System.out.println(loginDetail);
+
+        return JwtUtil.generateToken(loginDetail);
     }
 
     @Override
