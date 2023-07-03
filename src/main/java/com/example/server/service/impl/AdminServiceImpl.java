@@ -7,6 +7,7 @@ import com.example.server.exception.ApiException;
 import com.example.server.model.entity.AdminInfo;
 import com.example.server.model.entity.AdminLogin;
 import com.example.server.model.entity.Role;
+import com.example.server.model.param.AdminParam;
 import com.example.server.model.vo.LoginAdminVo;
 import com.example.server.model.vo.LoginDetail;
 import com.example.server.model.vo.QueryPage;
@@ -17,6 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -56,7 +58,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public String loginAdmin(String username, String password, String ip) {
         AdminLogin adminLogin = adminLoginDao.loginAdmin(username, password);
-        if(adminLogin == null) throw new ApiException(ApiError.E401);
+        if(adminLogin == null) throw new ApiException(ApiError.E404);
         adminLogin.setIp(ip);
         adminLogin.setLoginAt(new Date());
         if(login(adminLogin) <= 0) throw new ApiException(ApiError.E401);
@@ -66,8 +68,6 @@ public class AdminServiceImpl implements AdminService {
         loginDetail.setUsername(adminLogin.getAdminName());
         loginDetail.setIp(ip);
         loginDetail.setRole(roleService.getRoleCodeByAdminId(loginDetail.getUid()));
-
-        // System.out.println(loginDetail);
 
         return JwtUtil.generateToken(loginDetail);
     }
@@ -89,18 +89,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Integer createAdmin(AdminInfo adminInfo) {
-       return adminInfoDao.createAdmin(adminInfo);
-    }
+    @Transactional
+    public Integer addAdmin(AdminParam adminParam) {
+        AdminInfo adminInfo = new AdminInfo(adminParam);
+        adminInfoDao.addAdminInfo(adminInfo);
 
-    @Override
-    public Integer updateAdmin(AdminInfo adminInfo) {
-        return adminInfoDao.updateAdmin(adminInfo);
-    }
+        AdminLogin adminLogin = new AdminLogin();
+        adminLogin.setAdminId(adminInfo.getAdminId());
+        adminLogin.setAdminName(adminParam.getAdminName());
+        adminLogin.setPassword(adminParam.getPassword());
 
-    @Override
-    public Integer updateAdminLogin(AdminLogin adminLogin) {
-        return adminLoginDao.updateAdminLogin(adminLogin);
+        return adminLoginDao.addAdminLogin(adminLogin);
     }
 
     @Override

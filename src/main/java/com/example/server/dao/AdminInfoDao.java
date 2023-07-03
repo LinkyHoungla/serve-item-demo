@@ -1,9 +1,12 @@
 package com.example.server.dao;
 
 import com.example.server.model.entity.AdminInfo;
+import com.example.server.model.entity.AdminLogin;
+import com.example.server.model.param.AdminParam;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -29,24 +32,10 @@ public interface AdminInfoDao {
     })
     Page<AdminInfo> findAdminsByPage(String query);
 
-    // 动态分页查询总量
-    @Select({
-            "<script>",
-            "SELECT COUNT(*) FROM admin_info",
-            "WHERE 1 = 1",
-            "<if test='query != null'>",
-            "AND full_name LIKE CONCAT('%', #{query}, '%')",
-            "</if>",
-            "</script>"
-    })
-    int getTotalNum(@Param("query") String query);
-
-    @Insert({"INSERT INTO",
-            "admins(username, password, role, create_at)",
-            "VALUES(#{username}, #{password}, #{role}, #{createAt})"
-    })
-    @Options(useGeneratedKeys = true, keyProperty = "account")
-    Integer createAdmin(AdminInfo adminInfo);
+    @Insert("INSERT INTO admin_info (full_name, role_id, avatar, status, create_at, update_at) " +
+            "VALUES (#{fullName}, #{roleId}, #{avatar}, #{status}, #{createAt}, #{updateAt})")
+    @Options(useGeneratedKeys = true, keyProperty = "adminId")
+    Integer addAdminInfo(AdminInfo adminInfo);
 
     @Update("UPDATE admins SET username = #{username}, role = #{role} WHERE account = #{account}")
     Integer updateAdmin(AdminInfo adminInfo);

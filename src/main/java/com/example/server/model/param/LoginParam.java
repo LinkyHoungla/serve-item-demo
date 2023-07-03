@@ -7,8 +7,8 @@ public class LoginParam {
     private String username;
     private String password;
 
-    public LoginParam(String username, String token) {
+    public LoginParam(String username, String password) {
         this.username = username;
-        this.password = token;
+        this.password = password;
     }
 }

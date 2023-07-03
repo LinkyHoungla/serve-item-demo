@@ -2,6 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.model.entity.AdminInfo;
 import com.example.server.model.ApiResponse;
+import com.example.server.model.param.AdminParam;
 import com.example.server.model.param.LoginParam;
 import com.example.server.model.vo.QueryPage;
 import com.example.server.model.vo.LoginAdminVo;
@@ -58,25 +59,25 @@ public class AdminController {
 
     @GetMapping("/sameName")
     public ApiResponse isSameName(String username) {
-        // if (adminService.getAdminByName(username) == null) return ApiResponse.success("用户名可用");
+        if (adminService.getAdminInfoByName(username) == null) return ApiResponse.success("用户名可用");
         return ApiResponse.error(201, "用户名已存在");
     }
 
     @PostMapping
-    public ApiResponse addAdmin(@RequestBody AdminInfo adminInfo) {
-        adminInfo.setCreateAt(new Date());
-        if( adminService.createAdmin(adminInfo) > 0) return ApiResponse.success(null);
-        return ApiResponse.error(304,"添加失败");
+    public ApiResponse addAdmin(@RequestBody AdminParam adminParam) {
+        adminService.addAdmin(adminParam);
+        return ApiResponse.success(null);
     }
 
-    @PutMapping("/{account}")
-    public ApiResponse updateAdmin(@PathVariable("account") Integer id) {
+    @PutMapping("/{adminId}")
+    public ApiResponse updateAdmin(@PathVariable("adminId") Integer id) {
+
         return ApiResponse.error(304,"修改失败");
     }
 
-    @DeleteMapping("/{account}")
-    public ApiResponse deleteAdminById(@PathVariable("account") Integer id) {
-        if( adminService.deleteAdminById(id) > 0 ) return ApiResponse.success(null);
-        return ApiResponse.error(304, "删除失败");
+    @DeleteMapping("/{adminId}")
+    public ApiResponse deleteAdminById(@PathVariable("adminId") Integer id) {
+        adminService.deleteAdminById(id);
+        return ApiResponse.success(null);
     }
 }

@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/roles")
+@RequestMapping("/role")
 public class RoleController {
     @Autowired
     private RoleServiceImpl rolesService;
 
-    @GetMapping
-    public ApiResponse<List<Role>> getAllRoles(){
-        List<Role> roleList = rolesService.getAllRoles();
-        if(roleList != null) return ApiResponse.success(roleList);
-        return ApiResponse.error(404, "未查询到内容");
+    @GetMapping("/list")
+    public ApiResponse<List<Role>> getRoleList(){
+        return ApiResponse.success(rolesService.getRoleList());
     }
 
     @PostMapping

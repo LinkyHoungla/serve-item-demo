@@ -12,33 +12,26 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
-
-
     @Override
-    public List<Role> getAllRoles() {
-        return roleDao.getAllRoles();
+    public List<Role> getRoleList() {
+        return roleDao.getRoleList();
     }
-
     @Override
     public Role getRoleByAdminId(Integer adminId) {
         return roleDao.getRoleByAdminId(adminId);
     }
-
     @Override
     public String getRoleCodeByAdminId(Integer adminId) {
         return roleDao.getRoleCodeByAdminId(adminId);
     }
-
     @Override
     public Integer createRole(Role role) {
         return roleDao.createRole(role);
     }
-
     @Override
     public Integer updateRole(Role role) {
         return roleDao.updateRole(role);
     }
-
     @Override
     public Integer deleteRoleById(Integer roleId) {
         return roleDao.deleteRoleById(roleId);
