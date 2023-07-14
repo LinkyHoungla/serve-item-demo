@@ -57,9 +57,12 @@ public interface AdminInfoDao {
     Integer addAdminInfo(AdminInfo adminInfo);
 
     @Update("UPDATE admin_info " +
-            "SET full_name = #{fullName}, role_Id = #{roleId}, avatar = #{avatar}, status = #{status} " +
+            "SET full_name = #{fullName}, role_Id = #{roleId}, avatar = #{avatar}, status = #{status}, update_at = #{updateAt} " +
             "WHERE admin_id = #{adminId}")
-    Integer updateAdminInfo(AdminParam adminParam);
+    Integer updateAdminInfo(AdminInfo adminInfo);
+
+    @Update("UPDATE admin_info SET avatar = #{avatar} WHERE admin_id = #{adminId}")
+    Integer updateAvatar(Integer adminId, String avatar);
 
     @Delete("DELETE FROM admin_info WHERE admin_id = #{account}")
     Integer deleteAdminInfoById(Integer account);

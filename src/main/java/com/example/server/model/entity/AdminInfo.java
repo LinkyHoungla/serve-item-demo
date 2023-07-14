@@ -18,11 +18,11 @@ public class AdminInfo {
     private Date updateAt;
 
     public AdminInfo(AdminParam adminParam){
+        this.adminId = adminParam.getAdminId();
         this.fullName = adminParam.getFullName();
         this.roleId = adminParam.getRoleId();
         this.avatar = adminParam.getAvatar();
         this.status = adminParam.getStatus();
-        this.createAt = new Date();
-        this.updateAt = this.createAt;
+        this.updateAt = new Date();
     }
 }

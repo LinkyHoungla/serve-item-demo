@@ -21,7 +21,10 @@ public class DemoController {
         System.out.println(avatar.getContentType());
 
         // 获取服务器路径地址
-        String path = request.getServletContext().getRealPath("/upload");
+        // String path = request.getServletContext().getRealPath("/upload");
+        String path0 = "E:/Project/learning/vue/web-item-demo/server/src/main/resources/static";
+        Integer adminId = 1;
+        String path = path0 + "/avatar" + "/admin/" + adminId + "/";
 
         System.out.println(path);
         saveFile(avatar, path);
@@ -33,7 +36,7 @@ public class DemoController {
         File dir = new File(path);
         if(!dir.exists()) dir.mkdir();
 
-        File file = new File(path + avatar.getOriginalFilename());
+        File file = new File(path );
         avatar.transferTo(file);
     }
 

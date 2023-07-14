@@ -83,6 +83,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     public Integer addAdminInfo(AdminParam adminParam) {
         AdminInfo adminInfo = new AdminInfo(adminParam);
+        adminInfo.setCreateAt(new Date());
         adminInfoDao.addAdminInfo(adminInfo);
 
         AdminLogin adminLogin = new AdminLogin();
@@ -95,8 +96,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Integer updateAdminInfo(AdminParam adminParam) {
-        System.out.println(adminParam);
-        return adminInfoDao.updateAdminInfo(adminParam);
+        AdminInfo adminInfo = new AdminInfo(adminParam);
+        System.out.println(adminInfo);
+        return adminInfoDao.updateAdminInfo(adminInfo);
+    }
+
+    @Override
+    public Integer updateAvatar(Integer adminId, String filepath) {
+        return adminInfoDao.updateAvatar(adminId, filepath);
     }
 
     @Override

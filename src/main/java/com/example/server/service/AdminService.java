@@ -14,8 +14,10 @@ public interface AdminService {
     String loginAdmin(String username, String password, String ip);
     PageInfo<AdminInfoWithRole> getAdminsByPage(String query, Integer pageNum, Integer pageSize);
 
+
     Integer addAdminInfo(AdminParam adminParam);
     Integer updateAdminInfo(AdminParam adminParam);
+    Integer updateAvatar(Integer adminId, String filepath);
     Integer deleteAdminInfoById(Integer account);
 
 }

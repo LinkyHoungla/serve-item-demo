@@ -1,16 +1,8 @@
 spring:
-  devtools:
-    restart:
-      # ?????
-      enabled: true
-      # ??????
-      additional-paths: src/main/java
-      # ??classpath???? WEB-INF ??????????
-      exclude: static/**
   jackson:
     date-format: "yyyy-MM-dd HH:mm:ss"
     time-zone: "GMT+8"
-  # ???
+  # 数据库
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/player_platform
@@ -20,6 +12,10 @@ spring:
   mvc:
     path match:
       matching-strategy: ant_path_matcher
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: classpath:/static
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
