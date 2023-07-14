@@ -19,7 +19,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/upload")
 public class updateController {
-    private static final String FILEPATH = "E:/Project/learning/vue/web-item-demo/server/src/main/resources/static";
+    private static final String FILEPATH = "E:/Project/Web/static";
 
     @Autowired
     private AdminService adminService;
@@ -28,11 +28,12 @@ public class updateController {
     public ApiResponse uploadFile(@PathVariable("adminId") Integer adminId, MultipartFile avatar, HttpServletRequest request) {
 
         try {
-            String path = FILEPATH + "/avatar" + "/admin/";
+            String savePath = "/avatar/admin/";
+            String path = FILEPATH + savePath;
             String originalFilename = avatar.getOriginalFilename();
             String filename = adminId + "." + originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 
-            adminService.updateAvatar(adminId, path + filename);
+            adminService.updateAvatar(adminId, savePath + filename);
             saveFile(avatar, path, filename);
         } catch (IOException e) {
             System.out.println(e);
