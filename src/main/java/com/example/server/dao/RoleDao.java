@@ -12,6 +12,9 @@ public interface RoleDao {
     @Select("SELECT * FROM role")
     public List<Role> getRoleList();
 
+    @Select("SELECT * FROM role WHERE role.role_id = #{roleId}")
+    public Role getRoleById(Integer roleId);
+
     @Select("SELECT r.role_code FROM role r INNER JOIN admin_info ai ON r.role_id = ai.role_id WHERE ai.admin_id = #{adminId}")
     public String getRoleCodeByAdminId(Integer adminId);
 
@@ -30,4 +33,7 @@ public interface RoleDao {
 
     @Delete("DELETE FROM role WHERE role_id = #{roleId}")
     Integer deleteRoleById(Integer roleId);
+
+    @Select("SELECT role.role_name FROM role WHERE role_id = #{roleId}")
+    String getRoleNameById(Integer roleId);
 }

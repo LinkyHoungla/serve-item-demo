@@ -2,10 +2,12 @@ package com.example.server.model.entity;
 
 import com.example.server.model.param.AdminParam;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 public class AdminInfo {
     private Integer adminId;
     private String fullName;

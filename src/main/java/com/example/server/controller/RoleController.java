@@ -19,6 +19,12 @@ public class RoleController {
         return ApiResponse.success(rolesService.getRoleList());
     }
 
+    @GetMapping("/name")
+    public ApiResponse<String> getRoleNameById(Integer roleId){
+        System.out.println(roleId);
+        return ApiResponse.success(rolesService.getRoleNameById(roleId));
+    }
+
     @PostMapping
     public ApiResponse createRole(@RequestBody Role role) {
         if( rolesService.createRole(role) > 0) return ApiResponse.success(null);

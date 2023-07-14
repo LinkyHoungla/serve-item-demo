@@ -8,6 +8,7 @@ public interface RoleService {
     List<Role> getRoleList();
     Role getRoleByAdminId(Integer adminId);
     String getRoleCodeByAdminId(Integer adminId);
+    String getRoleNameById(Integer adminId);
     Integer createRole(Role role);
     Integer updateRole(Role role);
     Integer deleteRoleById(Integer roleId);

@@ -19,4 +19,8 @@ public interface AdminLoginDao {
     // 更新用户登录信息
     @Update("UPDATE admin_login SET admin_name = #{adminName}, login_at = #{loginAt}, ip = #{ip} WHERE admin_id = #{adminId}")
     Integer updateAdminLogin(AdminLogin adminLogin);
+
+    // 删除用户登录信息
+    @Delete("DELETE FROM admin_login WHERE admin_id = #{account}")
+    Integer deleteAdminLoginById(Integer account);
 }

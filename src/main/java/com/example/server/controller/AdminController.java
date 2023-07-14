@@ -1,10 +1,9 @@
 package com.example.server.controller;
 
-import com.example.server.model.entity.AdminInfo;
 import com.example.server.model.ApiResponse;
 import com.example.server.model.param.AdminParam;
 import com.example.server.model.param.LoginParam;
-import com.example.server.model.vo.QueryPage;
+import com.example.server.model.vo.AdminInfoWithRole;
 import com.example.server.model.vo.LoginAdminVo;
 import com.example.server.service.impl.AdminServiceImpl;
 import com.example.server.util.JwtUtil;
@@ -13,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -46,38 +43,36 @@ public class AdminController {
 
     @GetMapping("/info")
     public ApiResponse<LoginAdminVo> getAdminInfo(HttpServletRequest request) {
-        LoginAdminVo loginAdminVo = adminService.getLoginAdminVo((String) request.getAttribute("username"));
+        LoginAdminVo loginAdminVo = adminService.getLoginAdminVo((Integer) request.getAttribute("uid"));
         return ApiResponse.success(loginAdminVo);
     }
 
     @GetMapping("/page")
-    public ApiResponse<PageInfo<AdminInfo>> getAdminByPage(String query,
-                                                           @RequestParam(defaultValue = "1")Integer pageNum,
-                                                           @RequestParam(defaultValue = "10")Integer pageSize){
+    public ApiResponse<PageInfo<AdminInfoWithRole>> getAdminByPage(String query,
+                                                                   @RequestParam(defaultValue = "1")Integer pageNum,
+                                                                   @RequestParam(defaultValue = "10")Integer pageSize){
         return ApiResponse.success(adminService.getAdminsByPage(query, pageNum, pageSize));
     }
 
     @GetMapping("/sameName")
     public ApiResponse isSameName(String username) {
-        if (adminService.getAdminInfoByName(username) == null) return ApiResponse.success("用户名可用");
+        if (adminService.getAdminLoginByName(username) == null) return ApiResponse.success("用户名可用");
         return ApiResponse.error(201, "用户名已存在");
     }
 
     @PostMapping
     public ApiResponse addAdmin(@RequestBody AdminParam adminParam) {
-        adminService.addAdmin(adminParam);
-        return ApiResponse.success(null);
+        return ApiResponse.success(adminService.addAdminInfo(adminParam));
     }
 
-    @PutMapping("/{adminId}")
-    public ApiResponse updateAdmin(@PathVariable("adminId") Integer id) {
-
-        return ApiResponse.error(304,"修改失败");
+    @PutMapping
+    public ApiResponse updateAdmin(@RequestBody AdminParam adminParam) {
+        return ApiResponse.success(adminService.updateAdminInfo(adminParam));
     }
 
     @DeleteMapping("/{adminId}")
     public ApiResponse deleteAdminById(@PathVariable("adminId") Integer id) {
-        adminService.deleteAdminById(id);
+        adminService.deleteAdminInfoById(id);
         return ApiResponse.success(null);
     }
 }

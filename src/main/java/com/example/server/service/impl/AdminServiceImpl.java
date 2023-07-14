@@ -8,9 +8,9 @@ import com.example.server.model.entity.AdminInfo;
 import com.example.server.model.entity.AdminLogin;
 import com.example.server.model.entity.Role;
 import com.example.server.model.param.AdminParam;
+import com.example.server.model.vo.AdminInfoWithRole;
 import com.example.server.model.vo.LoginAdminVo;
 import com.example.server.model.vo.LoginDetail;
-import com.example.server.model.vo.QueryPage;
 import com.example.server.service.AdminService;
 import com.example.server.util.JwtUtil;
 import com.github.pagehelper.Page;
@@ -33,18 +33,13 @@ public class AdminServiceImpl implements AdminService {
     @Autowired RoleServiceImpl roleService;
 
     @Override
-    public AdminInfo getAdminById(Integer account) {
-        return adminInfoDao.getAdminById(account);
+    public AdminInfo getAdminInfoById(Integer uid) {
+        return adminInfoDao.getAdminInfoById(uid);
     }
 
     @Override
-    public AdminInfo getAdminInfoByName(String name) {
-        return adminInfoDao.getAdminInfoByName(name);
-    }
-
-    @Override
-    public LoginAdminVo getLoginAdminVo(String name) {
-        AdminInfo adminInfo = getAdminInfoByName(name);
+    public LoginAdminVo getLoginAdminVo(Integer uid) {
+        AdminInfo adminInfo = getAdminInfoById(uid);
         if (adminInfo == null) throw new ApiException(ApiError.E401);
         Role role = roleService.getRoleByAdminId(adminInfo.getAdminId());
         if (role == null) throw new ApiException(ApiError.E401);
@@ -72,25 +67,21 @@ public class AdminServiceImpl implements AdminService {
         return JwtUtil.generateToken(loginDetail);
     }
 
-    @Override
-    public List<AdminInfo> getAllAdmin() {
-        return null;
-    }
 
     @Override
-    public PageInfo<AdminInfo> getAdminsByPage(String query, Integer pageNum, Integer pageSize) {
+    public PageInfo<AdminInfoWithRole> getAdminsByPage(String query, Integer pageNum, Integer pageSize) {
          // return new QueryPage<>(adminInfoDao.getTotalNum(query), adminInfoDao.getAdminsByPage(query, pageNum, pageSize));
         // 使用PageHelper进行分页设置
         PageHelper.startPage(pageNum, pageSize);
         // 调用分页查询的方法
-        Page<AdminInfo> adminPage = adminInfoDao.findAdminsByPage(query);
+        Page<AdminInfoWithRole> adminPage = adminInfoDao.findAdminInfoWithRoleByPage(query);
         // 封装分页结果为PageInfo对象
         return new PageInfo<>(adminPage);
     }
 
     @Override
     @Transactional
-    public Integer addAdmin(AdminParam adminParam) {
+    public Integer addAdminInfo(AdminParam adminParam) {
         AdminInfo adminInfo = new AdminInfo(adminParam);
         adminInfoDao.addAdminInfo(adminInfo);
 
@@ -103,12 +94,23 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Integer deleteAdminById(Integer account) {
-        return adminInfoDao.deleteAdminById(account);
+    public Integer updateAdminInfo(AdminParam adminParam) {
+        System.out.println(adminParam);
+        return adminInfoDao.updateAdminInfo(adminParam);
+    }
+
+    @Override
+    @Transactional
+    public Integer deleteAdminInfoById(Integer account) {
+        adminLoginDao.deleteAdminLoginById(account);
+        adminInfoDao.deleteAdminInfoById(account);
+        return 1;
     }
 
     @Override
     public AdminLogin getAdminLoginByName(String name) {
-        return getAdminLoginByName(name);
+        adminInfoDao.getAdminInfoByName(name);
+        return null;
     }
+
 }
