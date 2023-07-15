@@ -3,7 +3,6 @@ package com.example.server.controller;
 import com.example.server.constant.ApiError;
 import com.example.server.exception.ApiException;
 import com.example.server.model.ApiResponse;
-import com.example.server.model.entity.AdminInfo;
 import com.example.server.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/upload")
-public class updateController {
+public class UpdateController {
     private static final String FILEPATH = "E:/Project/Web/static";
 
     @Autowired

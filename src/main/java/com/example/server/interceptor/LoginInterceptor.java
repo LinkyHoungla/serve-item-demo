@@ -43,7 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             System.out.print(role + "--");
             System.out.println(ip);
 
-        } catch (ExpiredJwtException e) {
+        } catch (ExpiredJwtException | ApiException e) {
             throw new ApiException(ApiError.E451);
         } catch (MalformedJwtException e) {
             throw new ApiException(ApiError.E450);
