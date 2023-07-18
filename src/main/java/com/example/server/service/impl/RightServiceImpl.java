@@ -3,6 +3,7 @@ package com.example.server.service.impl;
 import com.example.server.dao.RightDao;
 import com.example.server.model.entity.Right;
 import com.example.server.model.vo.Menu;
+import com.example.server.model.vo.PageList;
 import com.example.server.model.vo.PageTree;
 import com.example.server.service.RightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class RightServiceImpl implements RightService {
     private RightDao rightDao;
 
     @Override
-    public List<Right> getAllPages() {
-        return rightDao.getAllPages();
+    public List<PageList> getPageList() {
+        return rightDao.getPageList();
     }
 
     @Override

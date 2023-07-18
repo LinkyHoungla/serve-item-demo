@@ -89,7 +89,7 @@ public class AdminServiceImpl implements AdminService {
         AdminLogin adminLogin = new AdminLogin();
         adminLogin.setAdminId(adminInfo.getAdminId());
         adminLogin.setAdminName(adminParam.getAdminName());
-        adminLogin.setPassword(adminParam.getPassword());
+        adminLogin.setPassword("123456");
 
         return adminLoginDao.addAdminLogin(adminLogin);
     }
@@ -97,7 +97,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Integer updateAdminInfo(AdminParam adminParam) {
         AdminInfo adminInfo = new AdminInfo(adminParam);
-        System.out.println(adminInfo);
         return adminInfoDao.updateAdminInfo(adminInfo);
     }
 
@@ -110,8 +109,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     public Integer deleteAdminInfoById(Integer account) {
         adminLoginDao.deleteAdminLoginById(account);
-        adminInfoDao.deleteAdminInfoById(account);
-        return 1;
+        return adminInfoDao.deleteAdminInfoById(account);
     }
 
     @Override

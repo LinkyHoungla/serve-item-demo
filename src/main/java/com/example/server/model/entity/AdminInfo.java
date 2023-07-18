@@ -21,8 +21,6 @@ public class AdminInfo {
         this.adminId = adminParam.getAdminId();
         this.fullName = adminParam.getFullName();
         this.roleId = adminParam.getRoleId();
-        this.avatar = adminParam.getAvatar();
-        this.status = adminParam.getStatus();
         this.updateAt = new Date();
     }
 }

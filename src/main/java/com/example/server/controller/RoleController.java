@@ -3,6 +3,7 @@ package com.example.server.controller;
 import com.example.server.model.ApiResponse;
 import com.example.server.model.entity.Role;
 import com.example.server.service.impl.RoleServiceImpl;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,22 +27,18 @@ public class RoleController {
     }
 
     @PostMapping
-    public ApiResponse createRole(@RequestBody Role role) {
-        if( rolesService.createRole(role) > 0) return ApiResponse.success(null);
-        return ApiResponse.error(304,"添加失败");
+    public ApiResponse<Integer> createRole(@RequestBody Role role) {
+        return ApiResponse.success(rolesService.createRole(role));
     }
 
-    @PutMapping("/{roleId}")
-    public ApiResponse updateRole(@PathVariable("roleId") Integer roleId, @RequestBody Role role) {
-        role.setRoleId(roleId);
-        if( rolesService.updateRole(role) > 0) return ApiResponse.success(null);
-        return ApiResponse.error(304,"修改失败");
+    @PutMapping
+    public ApiResponse<Integer> updateRole(@RequestBody Role role) {
+        return ApiResponse.success(rolesService.updateRole(role));
     }
 
     @DeleteMapping("/{roleId}")
-    public ApiResponse deleteRoleById(@PathVariable("roleId") Integer roleId) {
-        if( rolesService.deleteRoleById(roleId) > 0 ) return ApiResponse.success(null);
-        return ApiResponse.error(304, "删除失败");
+    public ApiResponse<Integer> deleteRoleById(@PathVariable("roleId") Integer roleId) {
+        return ApiResponse.success(rolesService.deleteRoleById(roleId));
     }
 
 }

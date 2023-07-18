@@ -51,13 +51,13 @@ public interface AdminInfoDao {
     })
     Page<AdminInfo> findAdminsByPage(String query);
 
-    @Insert("INSERT INTO admin_info (full_name, role_id, avatar, status, create_at, update_at) " +
-            "VALUES (#{fullName}, #{roleId}, #{avatar}, #{status}, #{createAt}, #{updateAt})")
+    @Insert("INSERT INTO admin_info (full_name, role_id, status, create_at, update_at) " +
+            "VALUES (#{fullName}, #{roleId}, 0, #{createAt}, #{updateAt})")
     @Options(useGeneratedKeys = true, keyProperty = "adminId")
     Integer addAdminInfo(AdminInfo adminInfo);
 
     @Update("UPDATE admin_info " +
-            "SET full_name = #{fullName}, role_Id = #{roleId}, avatar = #{avatar}, status = #{status}, update_at = #{updateAt} " +
+            "SET full_name = #{fullName}, role_Id = #{roleId}, update_at = #{updateAt} " +
             "WHERE admin_id = #{adminId}")
     Integer updateAdminInfo(AdminInfo adminInfo);
 

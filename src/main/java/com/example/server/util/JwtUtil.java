@@ -1,6 +1,5 @@
 package com.example.server.util;
 
-import com.example.server.model.entity.AdminLogin;
 import com.example.server.model.vo.LoginDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,9 +12,9 @@ import java.util.List;
 
 public class JwtUtil {
     // 10min过期
-    private static long expire = 600;
+    private static final long EXPIRE = 60 * 10;
     // 32位密钥
-    private static String secret = "AaBbCcDdKinvaLinkyLoveYing123456";
+    private static final String SECRET = "AaBbCcDdKinvaLinkyLoveYing123456";
     // token前缀
     private static final String TOKEN_PREFIX = "Bearer ";
     // 请求头参数名
@@ -28,7 +27,7 @@ public class JwtUtil {
     public static String generateToken(LoginDetail loginDetail) {
         // 设置有效期
         Date now = new Date();
-        Date expiration = new Date(now.getTime() + 1000 * expire);
+        Date expiration = new Date(now.getTime() + 1000 * EXPIRE);
 
         Claims claims = Jwts.claims().setSubject(loginDetail.getUsername());
         claims.put("uid", loginDetail.getUid());
@@ -41,14 +40,14 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
     }
 
     // 解析token
     public static Claims getClaimsByToken(String token) {
         return Jwts.parser()
-                .setSigningKey(secret)
+                .setSigningKey(SECRET)
                 .parseClaimsJws(token)
                 .getBody();
     }
