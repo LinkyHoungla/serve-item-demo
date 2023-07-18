@@ -54,25 +54,18 @@ public class AdminController {
         return ApiResponse.success(adminService.getAdminsByPage(query, pageNum, pageSize));
     }
 
-    @GetMapping("/sameName")
-    public ApiResponse isSameName(String username) {
-        if (adminService.getAdminLoginByName(username) == null) return ApiResponse.success("用户名可用");
-        return ApiResponse.error(201, "用户名已存在");
-    }
-
     @PostMapping
-    public ApiResponse addAdmin(@RequestBody AdminParam adminParam) {
+    public ApiResponse<Integer> addAdmin(@RequestBody AdminParam adminParam) {
         return ApiResponse.success(adminService.addAdminInfo(adminParam));
     }
 
     @PutMapping
-    public ApiResponse updateAdmin(@RequestBody AdminParam adminParam) {
+    public ApiResponse<Integer> updateAdmin(@RequestBody AdminParam adminParam) {
         return ApiResponse.success(adminService.updateAdminInfo(adminParam));
     }
 
     @DeleteMapping("/{adminId}")
-    public ApiResponse deleteAdminById(@PathVariable("adminId") Integer id) {
-        adminService.deleteAdminInfoById(id);
-        return ApiResponse.success(null);
+    public ApiResponse<Integer> deleteAdminById(@PathVariable("adminId") Integer id) {
+        return ApiResponse.success(adminService.deleteAdminInfoById(id));
     }
 }

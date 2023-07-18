@@ -10,5 +10,6 @@ import java.util.List;
 public interface RightService {
     List<PageList> getPageList();
     List<PageTree> getPageTree();
-    List<Menu> getAdminMenu(String roleName);
+    List<Menu> getAdminMenu(Integer roleId);
+    List<PageTree> getRoleRights(Integer roleId);
 }

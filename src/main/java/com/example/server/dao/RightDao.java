@@ -17,8 +17,8 @@ public interface RightDao {
     List<PageTree> getParentPages();
     @Select("select * from webpage where parent_id = #{parentId}")
     List<PageTree> getChildPages(Integer parentId);
-    @Select("SELECT p.* FROM webpage p JOIN role_page rp ON p.page_id = rp.page_id JOIN role r ON r.role_id = rp.role_id WHERE r.role_code = #{name} AND p.parent_id = -1")
-    List<Menu> getParentMenusByRoleName(String name);
-    @Select("SELECT p.* FROM webpage p JOIN role_page rp ON p.page_id = rp.page_id JOIN role r ON r.role_id = rp.role_id WHERE r.role_code = #{name} AND p.parent_id = #{parentId}")
-    List<Menu> getChildMenusByRoleName(Integer parentId, String name);
+    @Select("SELECT p.* FROM webpage p JOIN role_page rp ON p.page_id = rp.page_id JOIN role r ON r.role_id = rp.role_id WHERE r.role_id = #{roleId} AND p.parent_id = -1")
+    List<Menu> getParentMenusByRoleId(Integer roleId);
+    @Select("SELECT p.* FROM webpage p JOIN role_page rp ON p.page_id = rp.page_id JOIN role r ON r.role_id = rp.role_id WHERE r.role_id = #{roleId} AND p.parent_id = #{parentId}")
+    List<Menu> getChildMenusByRoleId(Integer parentId, Integer roleId);
 }

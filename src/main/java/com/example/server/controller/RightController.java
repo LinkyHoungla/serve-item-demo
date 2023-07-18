@@ -30,7 +30,12 @@ public class RightController {
 
     @GetMapping("/menu")
     public ApiResponse<List<Menu>> getMenus(HttpServletRequest request) {
-        return ApiResponse.success(pageService.getAdminMenu((String)request.getAttribute("role")));
+        return ApiResponse.success(pageService.getAdminMenu((Integer)request.getAttribute("roleId")));
+    }
+
+    @GetMapping("/rights/{roleId}")
+    public ApiResponse<List<PageTree>> getRoleRights(@PathVariable("roleId") Integer roleId) {
+        return ApiResponse.success(pageService.getRoleRights(roleId));
     }
 
 }

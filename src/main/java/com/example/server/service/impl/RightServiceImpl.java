@@ -31,10 +31,19 @@ public class RightServiceImpl implements RightService {
     }
 
     @Override
-    public List<Menu> getAdminMenu(String roleName) {
-        List<Menu> parents = rightDao.getParentMenusByRoleName(roleName);
+    public List<Menu> getAdminMenu(Integer roleId) {
+        List<Menu> parents = rightDao.getParentMenusByRoleId(roleId);
         for (Menu parent: parents) {
-            parent.setChildren(rightDao.getChildMenusByRoleName(parent.getPageId(), roleName));
+            parent.setChildren(rightDao.getChildMenusByRoleId(parent.getPageId(), roleId));
+        }
+        return parents;
+    }
+
+    @Override
+    public List<PageTree> getRoleRights(Integer roleId) {
+        List<PageTree> parents = rightDao.getParentPages();
+        for (PageTree parent : parents) {
+            parent.setChildren(rightDao.getChildPages(parent.getPageId()));
         }
         return parents;
     }

@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -62,7 +61,7 @@ public class AdminServiceImpl implements AdminService {
         loginDetail.setUid(adminLogin.getAdminId());
         loginDetail.setUsername(adminLogin.getAdminName());
         loginDetail.setIp(ip);
-        loginDetail.setRole(roleService.getRoleCodeByAdminId(loginDetail.getUid()));
+        loginDetail.setRoleId(adminInfoDao.getRoleIdByAdminId(adminLogin.getAdminId()));
 
         return JwtUtil.generateToken(loginDetail);
     }
@@ -84,14 +83,13 @@ public class AdminServiceImpl implements AdminService {
     public Integer addAdminInfo(AdminParam adminParam) {
         AdminInfo adminInfo = new AdminInfo(adminParam);
         adminInfo.setCreateAt(new Date());
-        adminInfoDao.addAdminInfo(adminInfo);
 
         AdminLogin adminLogin = new AdminLogin();
         adminLogin.setAdminId(adminInfo.getAdminId());
         adminLogin.setAdminName(adminParam.getAdminName());
         adminLogin.setPassword("123456");
 
-        return adminLoginDao.addAdminLogin(adminLogin);
+        return adminInfoDao.addAdminInfo(adminInfo) + adminLoginDao.addAdminLogin(adminLogin);
     }
 
     @Override
@@ -101,8 +99,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Integer updateAvatar(Integer adminId, String filepath) {
-        return adminInfoDao.updateAvatar(adminId, filepath);
+    public void updateAvatar(Integer adminId, String filepath) {
+        adminInfoDao.updateAvatar(adminId, filepath);
     }
 
     @Override
@@ -110,12 +108,6 @@ public class AdminServiceImpl implements AdminService {
     public Integer deleteAdminInfoById(Integer account) {
         adminLoginDao.deleteAdminLoginById(account);
         return adminInfoDao.deleteAdminInfoById(account);
-    }
-
-    @Override
-    public AdminLogin getAdminLoginByName(String name) {
-        adminInfoDao.getAdminInfoByName(name);
-        return null;
     }
 
 }

@@ -31,7 +31,7 @@ public class JwtUtil {
 
         Claims claims = Jwts.claims().setSubject(loginDetail.getUsername());
         claims.put("uid", loginDetail.getUid());
-        claims.put("role", loginDetail.getRole());
+        claims.put("roleId", loginDetail.getRoleId());
         claims.put("ip", loginDetail.getIp());
 
         return Jwts.builder()

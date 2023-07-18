@@ -6,6 +6,6 @@ import lombok.Data;
 public class LoginDetail {
     private Integer uid;
     private String username;
-    private String role;
+    private Integer roleId;
     private String ip;
 }
