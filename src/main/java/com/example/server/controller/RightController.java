@@ -7,9 +7,7 @@ import com.example.server.model.vo.Menu;
 import com.example.server.model.vo.PageTree;
 import com.example.server.service.impl.RightServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -36,6 +34,22 @@ public class RightController {
     @GetMapping("/rights/{roleId}")
     public ApiResponse<List<PageTree>> getRoleRights(@PathVariable("roleId") Integer roleId) {
         return ApiResponse.success(pageService.getRoleRights(roleId));
+    }
+
+    @GetMapping("/rights/list/{roleId}")
+    public ApiResponse<List<Integer>> getRightsId(@PathVariable("roleId") Integer roleId) {
+        return ApiResponse.success(pageService.getRightsIdList(roleId));
+    }
+
+    @PostMapping("/rights/{roleId}")
+    public ApiResponse<Integer> addRights(@PathVariable("roleId") Integer roleId, @RequestBody List<Integer> rights) {
+        System.out.println(rights);
+        return ApiResponse.success(pageService.addRights(roleId, rights));
+    }
+
+    @DeleteMapping("/right/roleId/{roleId}/pageId/{pageId}")
+    public ApiResponse<Integer> getRoleRights(@PathVariable("roleId") Integer roleId, @PathVariable("pageId") Integer pageId) {
+        return ApiResponse.success(pageService.deleteRight(pageId, roleId));
     }
 
 }

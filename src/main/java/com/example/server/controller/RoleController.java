@@ -2,6 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.model.ApiResponse;
 import com.example.server.model.entity.Role;
+import com.example.server.model.vo.RoleWithRights;
 import com.example.server.service.impl.RoleServiceImpl;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;

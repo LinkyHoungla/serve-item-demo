@@ -14,6 +14,8 @@ public interface RoleDao {
     @Select("SELECT * FROM role WHERE role.role_id = #{roleId}")
     public Role getRoleById(Integer roleId);
 
+
+
     @Select("SELECT r.* FROM role r INNER JOIN admin_info ai ON r.role_id = ai.role_id WHERE ai.admin_id = #{adminId}")
     public Role getRoleByAdminId(Integer adminId);
 

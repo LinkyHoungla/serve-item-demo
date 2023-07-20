@@ -12,7 +12,7 @@ import java.util.List;
 
 public class JwtUtil {
     // 10min过期
-    private static final long EXPIRE = 60 * 10;
+    private static final long EXPIRE = 60 * 60 * 24;
     // 32位密钥
     private static final String SECRET = "AaBbCcDdKinvaLinkyLoveYing123456";
     // token前缀
