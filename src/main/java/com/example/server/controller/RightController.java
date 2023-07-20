@@ -7,6 +7,7 @@ import com.example.server.model.param.PageParam;
 import com.example.server.model.vo.Menu;
 import com.example.server.model.vo.PageTree;
 import com.example.server.service.impl.RightServiceImpl;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +19,16 @@ public class RightController {
     @Autowired
     private RightServiceImpl pageService;
 
-    @GetMapping("/page/{type}")
-    public ApiResponse<?> getRights(@PathVariable("type")String type, String query,
-                                    @RequestParam(defaultValue = "1")Integer pageNum,
-                                    @RequestParam(defaultValue = "10")Integer pageSize) {
-        if (type.equals("tree"))
-            return ApiResponse.success(pageService.getPageTree());
-        if (type.equals("list"))
-            return ApiResponse.success(pageService.getPageList(query, pageNum, pageSize));
-        throw new ApiException(ApiError.E404);
+    @GetMapping("/page/tree")
+    public ApiResponse<?> getRightTree(@RequestParam(defaultValue = "3")Integer level) {
+        return ApiResponse.success(pageService.getPageTree(level));
+    }
+
+    @GetMapping("/page/list")
+    public ApiResponse<PageInfo<PageTree>> getRightsList(String query,
+                                               @RequestParam(defaultValue = "1")Integer pageNum,
+                                               @RequestParam(defaultValue = "10")Integer pageSize) {
+        return ApiResponse.success(pageService.getPageTreeByPage(query, pageNum, pageSize));
     }
 
     @GetMapping("/menu")
@@ -35,7 +37,7 @@ public class RightController {
     }
 
     @GetMapping("/rights/{roleId}")
-    public ApiResponse<List<PageTree>> getRoleRights(@PathVariable("roleId") Integer roleId) {
+    public ApiResponse<List<PageTree>> getRoleRight(@PathVariable("roleId") Integer roleId) {
         return ApiResponse.success(pageService.getRoleRights(roleId));
     }
 
@@ -61,7 +63,7 @@ public class RightController {
     }
 
     @DeleteMapping("/right/roleId/{roleId}/pageId/{pageId}")
-    public ApiResponse<Integer> getRoleRights(@PathVariable("roleId") Integer roleId, @PathVariable("pageId") Integer pageId) {
+    public ApiResponse<Integer> deleteRoleRight(@PathVariable("roleId") Integer roleId, @PathVariable("pageId") Integer pageId) {
         return ApiResponse.success(pageService.deleteRight(pageId, roleId));
     }
 

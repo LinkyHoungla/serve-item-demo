@@ -2,7 +2,6 @@ package com.example.server.service.impl;
 
 import com.example.server.dao.RightDao;
 import com.example.server.model.param.PageParam;
-import com.example.server.model.vo.AdminInfoWithRole;
 import com.example.server.model.vo.Menu;
 import com.example.server.model.vo.PageList;
 import com.example.server.model.vo.PageTree;
@@ -10,7 +9,6 @@ import com.example.server.service.RightService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,14 +25,18 @@ public class RightServiceImpl implements RightService {
         // 使用PageHelper进行分页设置
         PageHelper.startPage(pageNum, pageSize);
         // 调用分页查询的方法
-        Page<PageList> rightPage = rightDao.getPageList();
+        Page<PageList> rightPage = rightDao.getPageList(query);
         // 封装分页结果为PageInfo对象
         return new PageInfo<>(rightPage);
     }
 
     @Override
-    public List<PageTree> getPageTree() {
-        List<PageTree> parents = rightDao.getParentPages();
+    public PageInfo<PageTree> getPageTreeByPage(String query, Integer pageNum, Integer pageSize) {
+        // 使用PageHelper进行分页设置
+        PageHelper.startPage(pageNum, pageSize);
+        // 调用分页查询的方法
+        Page<PageTree> parents = rightDao.getPageTreeByPage(query);
+
         for (PageTree parent : parents) {
             List<PageTree> sons = rightDao.getChildPages(parent.getPageId());
             parent.setChildren(sons);
@@ -42,6 +44,26 @@ public class RightServiceImpl implements RightService {
                 son.setChildren(rightDao.getChildPages(son.getPageId()));
             }
         }
+
+        // 封装分页结果为PageInfo对象
+        return new PageInfo<>(parents);
+    }
+
+    @Override
+    public List<PageTree> getPageTree(Integer level) {
+        List<PageTree> parents = rightDao.getParentPages();
+        if(level > 1) {
+            for (PageTree parent : parents) {
+                List<PageTree> sons = rightDao.getChildPages(parent.getPageId());
+                parent.setChildren(sons);
+                if (level > 2){
+                    for (PageTree son: sons) {
+                        son.setChildren(rightDao.getChildPages(son.getPageId()));
+                    }
+                }
+            }
+        }
+
         return parents;
     }
 

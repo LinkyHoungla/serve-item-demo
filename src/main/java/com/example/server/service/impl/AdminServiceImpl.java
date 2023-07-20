@@ -29,7 +29,8 @@ public class AdminServiceImpl implements AdminService {
     private AdminInfoDao adminInfoDao;
     @Autowired
     private AdminLoginDao adminLoginDao;
-    @Autowired RoleServiceImpl roleService;
+    @Autowired
+    private RoleServiceImpl roleService;
 
     @Override
     public AdminInfo getAdminInfoById(Integer uid) {

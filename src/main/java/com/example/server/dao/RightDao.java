@@ -21,7 +21,18 @@ public interface RightDao {
             "</if>",
             "</script>"
     })
-    Page<PageList> getPageList();
+    Page<PageList> getPageList(String query);
+    @Select({
+            "<script>",
+            "select * ",
+            "from webpage",
+            "WHERE parent_id = -1",
+            "<if test='query != null'>",
+            "AND path LIKE CONCAT('%', #{query}, '%')",
+            "</if>",
+            "</script>"
+    })
+    Page<PageTree> getPageTreeByPage(String query);
     @Select("select * from webpage where parent_id = -1")
     List<PageTree> getParentPages();
     @Select("select * from webpage where parent_id = #{parentId}")

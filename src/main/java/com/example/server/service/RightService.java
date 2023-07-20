@@ -12,7 +12,8 @@ import java.util.List;
 
 public interface RightService {
     PageInfo<PageList> getPageList(String query, Integer pageNum, Integer pageSize);
-    List<PageTree> getPageTree();
+    PageInfo<PageTree> getPageTreeByPage(String query, Integer pageNum, Integer pageSize);
+    List<PageTree> getPageTree(Integer level);
     List<Menu> getAdminMenu(Integer roleId);
     List<PageTree> getRoleRights(Integer roleId);
     List<Integer> getRightsIdList(Integer roleId);
