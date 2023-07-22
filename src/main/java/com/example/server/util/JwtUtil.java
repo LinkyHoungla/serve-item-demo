@@ -1,6 +1,5 @@
 package com.example.server.util;
 
-import com.example.server.model.vo.LoginDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,15 +23,14 @@ public class JwtUtil {
     private static final List<String> revokedTokens = new ArrayList<>();
 
     // 生成Token
-    public static String generateToken(LoginDetail loginDetail) {
+    public static String generateToken(String id, String ip, Integer roleId) {
         // 设置有效期
         Date now = new Date();
         Date expiration = new Date(now.getTime() + 1000 * EXPIRE);
 
-        Claims claims = Jwts.claims().setSubject(loginDetail.getUsername());
-        claims.put("uid", loginDetail.getUid());
-        claims.put("roleId", loginDetail.getRoleId());
-        claims.put("ip", loginDetail.getIp());
+        Claims claims = Jwts.claims().setSubject(id);
+        claims.put("ip", ip);
+        claims.put("roleId", roleId);
 
         return Jwts.builder()
                 .setHeaderParam("type", "JWT")

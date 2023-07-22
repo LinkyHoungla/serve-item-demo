@@ -42,7 +42,7 @@ public class UpdateController {
         return ApiResponse.success(null);
     }
 
-    public void saveFile(MultipartFile f, String path, String filename) throws IOException {
+    private void saveFile(MultipartFile f, String path, String filename) throws IOException {
         File dir = new File(path);
         if(!dir.exists()) dir.mkdir();
 

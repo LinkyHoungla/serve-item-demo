@@ -30,7 +30,7 @@ public class AdminController {
     }
 
     @PostMapping("/logout")
-    public ApiResponse logoutAdmin(HttpServletRequest request){
+    public ApiResponse<String> logoutAdmin(HttpServletRequest request){
         String token = JwtUtil.extractTokenFromRequest(request);
         if (token != null) {
             // 标记令牌为无效，使其失效
@@ -43,7 +43,7 @@ public class AdminController {
 
     @GetMapping("/info")
     public ApiResponse<LoginAdminVo> getAdminInfo(HttpServletRequest request) {
-        LoginAdminVo loginAdminVo = adminService.getLoginAdminVo((Integer) request.getAttribute("uid"));
+        LoginAdminVo loginAdminVo = adminService.getLoginAdminVo(Integer.parseInt((String) request.getAttribute("id")));
         return ApiResponse.success(loginAdminVo);
     }
 
