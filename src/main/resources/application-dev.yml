@@ -6,7 +6,7 @@ spring:
   # 数据库
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/player_platform
+    url: jdbc:mysql://localhost:3306/play_platform_db
     username: platform
     password: '#Admin#Platform_520'
     type: com.alibaba.druid.pool.DruidDataSource
