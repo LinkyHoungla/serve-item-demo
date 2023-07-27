@@ -1,7 +1,6 @@
 package com.example.server.dao;
 
 import com.example.server.model.entity.Order;
-import com.example.server.model.entity.Store;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -26,7 +25,7 @@ public interface OrderDao {
 
     // FUNCTION 获取 订单 基本信息
     @Select("SELECT * FROM `order` WHERE oid = #{oid}")
-    Store getOrderInfo(String oid);
+    Order getOrderInfo(String oid);
 
     // FUNCTION 添加 订单
     @Insert("Insert `order`(oid, uid, sid) " +

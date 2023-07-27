@@ -4,7 +4,6 @@ import com.example.server.constant.ApiError;
 import com.example.server.dao.OrderDao;
 import com.example.server.exception.ApiException;
 import com.example.server.model.entity.Order;
-import com.example.server.model.entity.Store;
 import com.example.server.service.OrderService;
 import com.example.server.util.Uuid;
 import com.github.pagehelper.Page;
@@ -30,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Store getOrderInfo(String oid) {
+    public Order getOrderInfo(String oid) {
         return orderDao.getOrderInfo(oid);
     }
 

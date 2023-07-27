@@ -20,7 +20,7 @@ public class OrderController {
     }
 
     @GetMapping("/{oid}")
-    public ApiResponse<Store> getOrder(@PathVariable("oid")String oid){
+    public ApiResponse<Order> getOrder(@PathVariable("oid")String oid){
         return ApiResponse.success(orderService.getOrderInfo(oid));
     }
 
